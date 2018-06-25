@@ -1,0 +1,28 @@
+/* banner start */
+.banner{
+    background-image: url('../img/banner.jpg');
+    background-size: cover;
+    height: 80px;
+    line-height: 80px;
+}
+
+.banner img{
+    animation: App-logo-spin infinite 10s linear;
+    height: 50px;
+    padding: 15px;
+    float: left;
+}
+
+.banner span{
+    float: right;
+    height: inherit;
+    line-height: inherit;
+    padding-right: 20px;
+    font-size: x-large;
+}
+
+@keyframes App-logo-spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+/* banner end */

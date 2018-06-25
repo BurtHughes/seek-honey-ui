@@ -1,21 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import Banner from './js/banner';
 
-class Test extends React.Component{
+class App extends React.Component{
     constructor(props){
         super(props);
-        this.state = {name: props.name};
+        this.state = {};
     }
 
     render () {
         return (
-            <h1>Hello, {this.state.name}!</h1>
+            <div>
+                <Banner />
+            </div>
         );
     }
 }
 
 ReactDOM.render(
-    <Test name='Tom'/>,
+    <App />,
     document.getElementById('root')
 );
