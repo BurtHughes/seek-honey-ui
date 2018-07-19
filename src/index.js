@@ -4,6 +4,7 @@ import Banner from './js/banner';
 import Body from './js/body';
 import MyFooter from './js/footer';
 import NavBar from './js/navBar';
+import NavBar2 from './js/navBar2';
 import 'weui';
 import 'react-weui/build/packages/react-weui.css';
 
@@ -19,7 +20,7 @@ class App extends React.Component{
                 <Banner />
                 {/* <Body /> */}
                 {/* <MyFooter /> */}
-                <NavBar />
+                <NavBar2 />
             </div>
         );
     }

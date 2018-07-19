@@ -1,9 +1,23 @@
+/* global statr */
+html,body{
+    height: 100%;
+    touch-action: none;
+}
+body{
+    margin-top: 80px;
+}
+/* global end */
+
 /* banner start */
 .banner{
     background-image: url('../img/banner.jpg');
     background-size: cover;
     height: 80px;
     line-height: 80px;
+    z-index: 3;
+    position: fixed;
+    width: 100%;
+    top: 0;
 }
 
 .banner img{
@@ -27,17 +41,11 @@
 }
 /* banner end */
 
-/* body start */
-#root{
-    
+/* some start */
+.weui-tab{
+    position: unset!important;
 }
-/* body end */
-
-/* nav-bar start */
-.nav-bar{
-    display: block;
-    position: absolute;
-    z-index: 2;
-    bottom: 0;
+.weui-tabbar{
+    position: fixed!important;
 }
-/* nav-bar end */
+/* some end */
