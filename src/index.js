@@ -2,6 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Banner from './js/banner';
 import Body from './js/body';
+import MyFooter from './js/footer';
+import NavBar from './js/navBar';
+import 'weui';
+import 'react-weui/build/packages/react-weui.css';
 
 class App extends React.Component{
     constructor(props){
@@ -13,7 +17,9 @@ class App extends React.Component{
         return (
             <div>
                 <Banner />
-                <Body />
+                {/* <Body /> */}
+                {/* <MyFooter /> */}
+                <NavBar />
             </div>
         );
     }

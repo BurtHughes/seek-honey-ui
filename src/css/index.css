@@ -26,3 +26,18 @@
     to { transform: rotate(360deg); }
 }
 /* banner end */
+
+/* body start */
+#root{
+    
+}
+/* body end */
+
+/* nav-bar start */
+.nav-bar{
+    display: block;
+    position: absolute;
+    z-index: 2;
+    bottom: 0;
+}
+/* nav-bar end */
