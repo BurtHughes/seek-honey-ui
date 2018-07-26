@@ -1,0 +1,23 @@
+import React from "react";
+import {Article} from 'react-weui';
+
+export default class News extends React.Component {
+  render = () => {
+    return (
+      <div style={{ display: this.props.display }}>
+        <Article>
+          <h1>资讯页面</h1>
+          <section>
+            <h2 className="title">展示一些蜂蜜相关的资讯</h2>
+            <section>
+              <h3>什么样的蜂蜜才是好蜂蜜？</h3>
+              <p>
+                众所周知，蜂蜜吃了是非常有好处的，但是什么样的蜂蜜才是好蜂蜜呢？我们今天来一探究竟......
+              </p>
+            </section>
+          </section>
+        </Article>
+      </div>
+    );
+  };
+}
