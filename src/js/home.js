@@ -22,31 +22,27 @@ export default class Home extends React.Component {
 
     constructor() {
         super();
-        fetch(TestUrl.productList, { method: 'get' })
-            .then(res => res.json())
-            .then(res => {
-                setTimeout(() => {
-                    this.setState({ dataList: res.data, showLoading: false });
-                }, 2000);
-            })
-            .catch(err => {
-                console.log('fetch出错:' + err);
-            });
+        let success = res => {
+            console.log('成功:' + res);
+            this.setState({ dataList: res.data, showLoading: false });
+        };
+        let fail = res => {
+            console.log('失败:' + res);
+            this.setState({ showLoading: false });
+        };
+        GET({ path: TestUrl.productList }).then(success, fail);
     }
 
-    cellList = (list, props) => {
-        let result;
-        for (let i in list) {
-            let cur = list[i];
-            result += <Cell href="javascript:;" onClick={props.popup} link>
+    cellList = () => {
+        return this.state.dataList.map((obj, index) => {
+            return <Cell key={index} href="javascript:;" onClick={this.props.popup} link>
                 <CellHeader>
-                    <img src={fm1} alt="" style={{ width: '100px' }} />
+                    <img src={fm1} alt={obj.imgId} style={{ width: '100px' }} />
                 </CellHeader>
-                <CellBody>蜜蜂1</CellBody>
+                <CellBody>{obj.productName}</CellBody>
                 <CellFooter />
             </Cell>;
-        }
-        return result;
+        });
     }
 
     render = () => {
@@ -54,19 +50,7 @@ export default class Home extends React.Component {
             <div style={{ display: this.props.display }}>
                 <Toast icon="loading" show={this.state.showLoading}>Loading...</Toast>
                 <CellsTitle>新鲜的蜂蜜</CellsTitle>
-                <Cells>
-                    {
-                        this.state.dataList.map(obj => {
-                            return <Cell href="javascript:;" onClick={this.props.popup} link>
-                                <CellHeader>
-                                    <img src={fm1} alt={obj.imgId} style={{ width: '100px' }} />
-                                </CellHeader>
-                                <CellBody>obj.productName</CellBody>
-                                <CellFooter />
-                            </Cell>;
-                        })
-                    }
-                </Cells>
+                <Cells>{this.cellList()}</Cells>
             </div>
         );
     }

@@ -1,7 +1,8 @@
 import 'whatwg-fetch';
 // Restfult风格请求
 let baseUrl = 'http://127.0.0.1/';
-let req = obj => {
+
+let req = (obj) => {
     let path = '';
     if (typeof obj.path === 'string') {
         if (obj.path.indexOf('http') === 0) {
@@ -10,23 +11,40 @@ let req = obj => {
             path = baseUrl + obj.path;
         }
     } else {
-        return;
+        return '请求路径错误';
     }
-    fetch(path, { method: obj.method })
-        .catch((err) => {
-            console.error('请求出错:' + err);
-        });
+
+    let promise = (resolve, reject) => {
+        fetch(path, { method: obj.method })
+            .then(res => {
+                if (res.ok) {
+                    return res.json();
+                } else {
+                    console.error('请求失败:' + res);
+                    reject({ status: res.status });
+                }
+            })
+            .then(res => {
+                resolve(res);
+            })
+            .catch(err => {
+                console.error('请求出错:' + err);
+                reject({ status: -1 });
+            });
+    };
+
+    return new Promise(promise);
 };
 
-export let GET = obj => {
-    req({ ...obj, method: 'get' });
+export let GET = (obj) => {
+    return req({ ...obj, method: 'get' });
 };
-export let POST = obj => {
-    req({ ...obj, method: 'post' });
+export let POST = (obj) => {
+    return req({ ...obj, method: 'post' });
 };
-export let PUT = obj => {
-    req({ ...obj, method: 'put' });
+export let PUT = (obj) => {
+    return req({ ...obj, method: 'put' });
 };
-export let DELETE = obj => {
-    req({ ...obj, method: 'delete' });
+export let DELETE = (obj) => {
+    return req({ ...obj, method: 'delete' });
 };
