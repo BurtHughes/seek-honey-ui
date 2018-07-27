@@ -4,13 +4,6 @@ import {
   TabBody,
   TabBar,
   TabBarItem,
-  Article,
-  Cells,
-  Cell,
-  CellBody,
-  CellHeader,
-  Popup,
-  PopupHeader,
   Dialog
 } from "react-weui";
 import HomeBtn from "../img/home.png";
@@ -18,13 +11,14 @@ import ListBtn from "../img/list.png";
 import MineBtn from "../img/mine.png";
 import Home from "./home";
 import News from "./news";
-import Mine from "./mine";
-import MyPopup from "./myPopup";
+import Mine from "./mine/mine";
+import { Link } from "react-router-dom";
 
 export default class Content extends React.Component {
   state = {
     tab: 0,
     bottom_show: false,
+    isLogIn: false,
     buttons: [
       {
         type: "default",
@@ -76,8 +70,8 @@ export default class Content extends React.Component {
         <Dialog {...dialogProp}>这是弹窗</Dialog>
         <TabBody>
           <Home {...this.pageProp(0)} />
-          <News {...this.isVisible(1)}/>
-          <Mine {...this.isVisible(2)}/>
+          <News {...this.isVisible(1)} />
+          <Mine {...this.isVisible(2)} />
         </TabBody>
         <TabBar>
           <TabBarItem
