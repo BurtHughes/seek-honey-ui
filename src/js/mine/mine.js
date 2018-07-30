@@ -3,14 +3,15 @@ import {
   Route,
   Switch,
   BrowserRouter as Router,
-  Redirect
+  Redirect,
+  withRouter
 } from "react-router-dom";
 import Info from "./info";
 import NoLogin from "./no-login";
 import Register from "./register";
 import Login from "./login";
 
-export default class Mine extends React.Component {
+class Mine extends React.Component {
   state = {
     isLogin: false
   };
@@ -20,9 +21,14 @@ export default class Mine extends React.Component {
     this.logedIn = this.logedIn.bind(this);
   }
 
-  // 设置登录状态
   logedIn = () => {
     this.setState({isLogin: true});
+  }
+
+  logedOut = () => {
+    this.setState({isLogin: false});
+    this.props.history.push("/nologin");
+    //this.props.location.reload();
   }
 
   render = () => {
@@ -38,10 +44,11 @@ export default class Mine extends React.Component {
               path="/"
               exact
               render={() => {
-                return this.state.isLogin ? <Redirect to="/info"/> : <NoLogin logedIn={this.logedIn} />;
+                return this.state.isLogin ? <Redirect to="/info"/> : <Redirect to="/nologin"/>;
               }}
             />
-            <Route path="/info" component={Info}/>
+            <Route path="/info" component={()=>{return <Info logedOut={this.logedOut}/>}}/>
+            <Route path="/nologin" component={NoLogin}/>
             <Route path="/login" component={()=>{return <Login logedIn={this.logedIn}/>}} />
             <Route path="/register" component={Register} />
           </Switch>
@@ -50,3 +57,4 @@ export default class Mine extends React.Component {
     );
   };
 }
+export default withRouter(Mine)
