@@ -46,7 +46,7 @@ class Info extends React.Component {
                 </Panel>
 
                 <div>
-                    <Button plain onClick={this.props.logedOut}>退出登录</Button>
+                    <Button plain onClick={this.logOut}>退出登录</Button>
                 </div>
             </div>
         );

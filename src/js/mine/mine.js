@@ -27,18 +27,12 @@ class Mine extends React.Component {
 
   logedOut = () => {
     this.setState({isLogin: false});
-    this.props.history.push("/nologin");
-    //this.props.location.reload();
   }
 
   render = () => {
     return (
       <Router>
         <div style={{ display: this.props.display }}>
-          {/* <Link to="/nologin">未登录时</Link>
-                <Link to="/login">去登录</Link>
-                <Link to="/register">去注册</Link>
-                <Link to="/info">登录后</Link> */}
           <Switch>
             <Route
               path="/"

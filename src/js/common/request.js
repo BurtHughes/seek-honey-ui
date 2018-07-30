@@ -1,6 +1,7 @@
 import 'whatwg-fetch';
 // Restfult风格请求
 let baseUrl = 'http://127.0.0.1/';
+let isPrd = false;//false-测试 true-生产
 
 let req = (obj) => {
     let path = '';
@@ -40,11 +41,11 @@ export let GET = (obj) => {
     return req({ ...obj, method: 'get' });
 };
 export let POST = (obj) => {
-    return req({ ...obj, method: 'post' });
+    return req({ ...obj, method: isPrd ? 'post' : 'get' });
 };
 export let PUT = (obj) => {
-    return req({ ...obj, method: 'put' });
+    return req({ ...obj, method: isPrd ? 'put' : 'get' });
 };
 export let DELETE = (obj) => {
-    return req({ ...obj, method: 'delete' });
+    return req({ ...obj, method: isPrd ? 'delete' : 'get' });
 };

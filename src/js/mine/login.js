@@ -11,6 +11,8 @@ import {
   Button
 } from "react-weui";
 import { withRouter } from "react-router-dom";
+import { POST } from "../common/request";
+import { TestUrl } from "../test-data/url-list";
 
 class Login extends React.Component {
   constructor() {
@@ -19,8 +21,14 @@ class Login extends React.Component {
   }
 
   logedIn = () => {
-    this.props.logedIn();
-    this.props.history.push("/info");
+    POST({ path: TestUrl.login }).then(res => {
+      if (res.code === 0) {
+        this.props.logedIn();
+        this.props.history.push("/info");
+      } else {
+        alert('登录失败');
+      }
+    });
   };
 
   render = () => {

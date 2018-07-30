@@ -5,19 +5,24 @@ import { withRouter, Link, BrowserRouter as Router } from "react-router-dom";
 class NoLogin extends React.Component {
   constructor() {
     super();
-    this.goto = this.goto.bind(this);
+    this.gotoLogin = this.gotoLogin.bind(this);
+    this.gotoRegister = this.gotoRegister.bind(this);
   }
 
-  goto = () => {
+  gotoLogin = () => {
     this.props.history.push("/login");
+  };
+
+  gotoRegister = () => {
+    this.props.history.push("/register");
   };
 
   render = () => {
     return (
       <Router>
         <ButtonArea>
-          <Button onClick={this.goto}>登录</Button>
-          <Button plain>注册</Button>
+          <Button onClick={this.gotoLogin}>登录</Button>
+          <Button plain onClick={this.gotoRegister}>注册</Button>
         </ButtonArea>
       </Router>
     );
