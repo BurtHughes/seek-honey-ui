@@ -30,9 +30,14 @@ class Register extends React.Component {
   };
 
   register = () => {
-    POST({ path: TestUrl.register }).then(res => {
+    // POST({ path: TestUrl.register }).then(res => {
+    let param = {
+      name: document.getElementById("name").value,
+      password: document.getElementById("pwd").value
+    };
+    POST({ path: 'register', param: param }).then(res => {
       if (res.code === 0) {
-        this.showDialog(res.msg);
+        this.showDialog('注册成功');
       } else {
         this.showDialog(res.msg);
       }
@@ -81,7 +86,7 @@ class Register extends React.Component {
               <Label>用户名</Label>
             </CellHeader>
             <CellBody>
-              <Input type="text" placeholder="请输入用户名" />
+              <Input type="text" id="name" placeholder="请输入用户名" />
             </CellBody>
           </FormCell>
           <FormCell>
@@ -89,7 +94,7 @@ class Register extends React.Component {
               <Label>密码</Label>
             </CellHeader>
             <CellBody>
-              <Input type="text" placeholder="请输入密码" />
+              <Input type="text" id="pwd" placeholder="请输入密码" />
             </CellBody>
           </FormCell>
         </Form>

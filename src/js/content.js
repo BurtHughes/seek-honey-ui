@@ -11,6 +11,7 @@ import ListBtn from "../img/list.png";
 import MineBtn from "../img/mine.png";
 import Home from "./home";
 import News from "./news";
+import Identify from "./identify";
 import Mine from "./mine/mine";
 import { Link } from "react-router-dom";
 
@@ -71,7 +72,8 @@ export default class Content extends React.Component {
         <TabBody>
           <Home {...this.pageProp(0)} />
           <News {...this.isVisible(1)} />
-          <Mine {...this.isVisible(2)} />
+          <Identify {...this.isVisible(2)} />
+          <Mine {...this.isVisible(3)} />
         </TabBody>
         <TabBar>
           <TabBarItem
@@ -89,6 +91,12 @@ export default class Content extends React.Component {
           <TabBarItem
             active={this.state.tab == 2}
             onClick={e => this.setState({ tab: 2 })}
+            icon={<img src={ListBtn} />}
+            label="鉴别"
+          />
+          <TabBarItem
+            active={this.state.tab == 3}
+            onClick={e => this.setState({ tab: 3 })}
             icon={<img src={MineBtn} />}
             label="我的"
           />
