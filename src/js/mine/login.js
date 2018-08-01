@@ -18,6 +18,7 @@ class Login extends React.Component {
   constructor() {
     super();
     this.logedIn = this.logedIn.bind(this);
+    this.back = this.back.bind(this);
   }
 
   logedIn = () => {
@@ -30,6 +31,10 @@ class Login extends React.Component {
       }
     });
   };
+
+  back = () => {
+    this.props.history.push("/nologin");
+  }
 
   render = () => {
     return (
@@ -56,6 +61,7 @@ class Login extends React.Component {
 
         <ButtonArea>
           <Button onClick={this.logedIn}>确定 </Button>
+          <Button plain onClick={this.back}>返回 </Button>
         </ButtonArea>
       </div>
     );
