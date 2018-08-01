@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  Tab,
-  TabBody,
-  TabBar,
-  TabBarItem,
-  Dialog
-} from "react-weui";
+import { Tab, TabBody, TabBar, TabBarItem, Toast } from "react-weui";
 import HomeBtn from "../img/home.png";
 import ListBtn from "../img/list.png";
 import MineBtn from "../img/mine.png";
@@ -13,67 +7,45 @@ import Home from "./home";
 import News from "./news";
 import Identify from "./identify";
 import Mine from "./mine/mine";
-import { Link } from "react-router-dom";
 
 export default class Content extends React.Component {
   state = {
     tab: 0,
-    bottom_show: false,
     isLogIn: false,
-    buttons: [
-      {
-        type: "default",
-        label: "取消",
-        onClick: this.hide.bind(this)
-      },
-      {
-        type: "primary",
-        label: "确定",
-        onClick: this.hide.bind(this)
-      }
-    ]
+    showToast: false,
+    toastContent: '',
+    toastTimer: null
   };
 
   constructor() {
     super();
-    this.popup = this.popup.bind(this);
-    this.hide = this.hide.bind(this);
-    this.isVisible = this.isVisible.bind(this);
+    this.pageProp = this.pageProp.bind(this);
+    this.showToast = this.showToast.bind(this);
   }
 
-  popup() {
-    this.setState({ bottom_show: true });
+  pageProp = (index) => {
+    return {
+      display: this.state.tab == index ? null : "none",
+      g_toast: this.showToast
+    }
   }
 
-  hide() {
-    this.setState({ bottom_show: false });
+  showToast = (msg, time = 1500) => {
+    this.setState({ showToast: true, toastContent: msg });
+    setTimeout(() => {
+      this.setState({ showToast: false });
+    }, time);
   }
-
-  // 判断当前页面是否可见
-  isVisible = index => ({ display: this.state.tab == index ? null : "none" });
-
-  // 页面属性
-  pageProp = index => ({
-    ...this.isVisible(index),
-    popup: this.popup
-  });
 
   render() {
-    let dialogProp = {
-      type: "ios",
-      title: "温馨提示",
-      buttons: this.state.buttons,
-      show: this.state.bottom_show
-    };
     return (
       <Tab>
-        {/* <MyPopup /> */}
-        <Dialog {...dialogProp}>这是弹窗</Dialog>
+        <Toast show={this.state.showToast}>{this.state.toastContent}</Toast>
         <TabBody>
           <Home {...this.pageProp(0)} />
-          <News {...this.isVisible(1)} />
-          <Identify {...this.isVisible(2)} />
-          <Mine {...this.isVisible(3)} />
+          <News {...this.pageProp(1)} />
+          <Identify {...this.pageProp(2)} />
+          <Mine {...this.pageProp(3)} />
         </TabBody>
         <TabBar>
           <TabBarItem
@@ -91,13 +63,13 @@ export default class Content extends React.Component {
           <TabBarItem
             active={this.state.tab == 2}
             onClick={e => this.setState({ tab: 2 })}
-            icon={<img src={ListBtn} />}
+            icon={<img src={MineBtn} />}
             label="鉴别"
           />
           <TabBarItem
             active={this.state.tab == 3}
             onClick={e => this.setState({ tab: 3 })}
-            icon={<img src={MineBtn} />}
+            icon={<img src={HomeBtn} />}
             label="我的"
           />
         </TabBar>

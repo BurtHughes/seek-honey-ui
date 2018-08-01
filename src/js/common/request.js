@@ -1,7 +1,7 @@
 import 'whatwg-fetch';
 // Restfult风格请求
 let baseUrl = 'http://127.0.0.1/';
-let isPrd = true;//false-测试 true-生产
+let isPrd = false;//false-测试 true-生产
 
 let req = (obj) => {
     let path = '';
@@ -24,7 +24,9 @@ let req = (obj) => {
                 if (res.ok) {
                     return res.json();
                 } else {
-                    console.error('请求失败:' + res);
+                    let msg = '请求失败:' + res.msg;
+                    obj.toast && obj.toast(msg);
+                    console.error(msg);
                     reject({ status: res.status });
                 }
             })
@@ -32,7 +34,9 @@ let req = (obj) => {
                 resolve(res);
             })
             .catch(err => {
-                console.error('请求出错:' + err);
+                let msg = '请求出错:' + err;
+                obj.toast && obj.toast(msg, 3000);
+                console.error(msg);
                 reject({ status: -1 });
             });
     };

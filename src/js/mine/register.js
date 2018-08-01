@@ -9,7 +9,9 @@ import {
   Input,
   Button,
   ButtonArea,
-  Dialog
+  Dialog,
+  Toast,
+  Toptips
 } from "react-weui";
 import { TestUrl } from "../test-data/url-list";
 import { POST } from "../common/request";
@@ -20,29 +22,63 @@ class Register extends React.Component {
     super();
     this.register = this.register.bind(this);
     this.showDialog = this.showDialog.bind(this);
-    this.hideDialog = this.hideDialog.bind(this);
+    this.gotoLogin = this.gotoLogin.bind(this);
     this.gotoNologin = this.gotoNologin.bind(this);
   }
 
   state = {
     dialogShow: false,
-    dialogMsg: ""
+    dialogMsg: '',
+    showToptips: false,
+    toptips: '',
+    warnTimer: null,
+    nextAction: () => { }
   };
 
   register = () => {
     // POST({ path: TestUrl.register }).then(res => {
+    //校验表单
+    let name = document.getElementById("name").value;
+    let pwd = document.getElementById("pwd").value;
+    if (name === '') {
+      this.showToptips('用户名不能为空！');
+      return;
+    }
+    if (pwd === '') {
+      this.showToptips('密码不能为空！');
+      return;
+    }
     let param = {
       name: document.getElementById("name").value,
       password: document.getElementById("pwd").value
     };
-    POST({ path: 'register', param: param }).then(res => {
-      if (res.code === 0) {
-        this.showDialog('注册成功');
-      } else {
-        this.showDialog(res.msg);
-      }
-    });
+    POST({
+      path: 'register',
+      param: param,
+      toast: this.props.toast
+    })
+      .then(res => {
+        if (res.code === 0) {
+          this.setState({ nextAction: this.gotoLogin });
+          this.showDialog('注册成功');
+        } else {
+          this.setState({ nextAction: this.hideDialog });
+          this.showDialog(res.msg);
+        }
+      });
   };
+
+  showToptips = (msg) => {
+    this.setState({
+      showToptips: true,
+      toptips: msg
+    });
+    this.state.warnTimer = setTimeout(() => {
+      this.setState({
+        showToptips: false
+      });
+    }, 1500);
+  }
 
   showDialog = msg => {
     this.setState({ dialogMsg: msg, dialogShow: true });
@@ -50,6 +86,11 @@ class Register extends React.Component {
 
   hideDialog = () => {
     this.setState({ dialogShow: false });
+  }
+
+  gotoLogin = () => {
+    this.setState({ dialogShow: false });
+    this.props.history.push("/login");
   };
 
   gotoNologin = () => {
@@ -57,28 +98,22 @@ class Register extends React.Component {
   };
 
   render = () => {
-    let buttons = [
-      {
-        type: "default",
-        label: "取消",
-        onClick: this.hideDialog
-      },
-      {
-        type: "primary",
-        label: "确定",
-        onClick: this.hideDialog
-      }
-    ];
-
     let dialogProp = {
       type: "ios",
       title: "温馨提示",
-      buttons: buttons,
+      buttons: [{
+        type: "primary",
+        label: "确定",
+        onClick: this.state.nextAction
+      }],
       show: this.state.dialogShow
     };
     return (
       <div>
         <Dialog {...dialogProp}>{this.state.dialogMsg}</Dialog>
+        <Toptips type="warn" show={this.state.showToptips}>
+          {this.state.toptips}
+        </Toptips>
         <CellsTitle>注册</CellsTitle>
         <Form>
           <FormCell>
@@ -101,7 +136,7 @@ class Register extends React.Component {
 
         <ButtonArea>
           <Button onClick={this.register}>确定</Button>
-          <Button plain onClick={this.gotoNologin}>放弃</Button>
+          <Button plain onClick={this.gotoNologin}>返回</Button>
         </ButtonArea>
       </div>
     );

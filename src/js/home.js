@@ -35,7 +35,7 @@ export default class Home extends React.Component {
 
     cellList = () => {
         return this.state.dataList.map((obj, index) => {
-            return <Cell key={index} href="javascript:;" onClick={this.props.popup} link>
+            return <Cell key={index} href="javascript:;" link>
                 <CellHeader>
                     <img src={fm1} alt={obj.imgId} style={{ width: '100px' }} />
                 </CellHeader>
