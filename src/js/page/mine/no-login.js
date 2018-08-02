@@ -1,6 +1,6 @@
 import React from "react";
 import { ButtonArea, Button } from "react-weui";
-import { withRouter, Link, BrowserRouter as Router } from "react-router-dom";
+import { withRouter, BrowserRouter as Router } from "react-router-dom";
 
 class NoLogin extends React.Component {
   constructor() {

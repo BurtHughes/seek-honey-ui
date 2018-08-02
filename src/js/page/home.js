@@ -8,9 +8,9 @@ import {
     CellFooter,
     Toast
 } from 'react-weui';
-import { GET } from './common/request';
-import { TestUrl } from './test-data/url-list';
-import fm1 from '../img/fm1.jpg';
+import { GET } from '../common/request';
+import { TestUrl } from '../test-data/url-list';
+import fm1 from '../../img/fm1.jpg';
 import 'whatwg-fetch';
 
 // 首页内容
@@ -35,7 +35,7 @@ export default class Home extends React.Component {
 
     cellList = () => {
         return this.state.dataList.map((obj, index) => {
-            return <Cell key={index} href="javascript:;" link>
+            return <Cell key={index} link>
                 <CellHeader>
                     <img src={fm1} alt={obj.imgId} style={{ width: '100px' }} />
                 </CellHeader>

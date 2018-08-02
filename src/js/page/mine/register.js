@@ -10,11 +10,9 @@ import {
   Button,
   ButtonArea,
   Dialog,
-  Toast,
   Toptips
 } from "react-weui";
-import { TestUrl } from "../test-data/url-list";
-import { POST } from "../common/request";
+import { POST } from "../../common/request";
 import { withRouter } from "react-router-dom";
 
 class Register extends React.Component {
@@ -31,7 +29,6 @@ class Register extends React.Component {
     dialogMsg: '',
     showToptips: false,
     toptips: '',
-    warnTimer: null,
     nextAction: () => { }
   };
 
@@ -73,7 +70,7 @@ class Register extends React.Component {
       showToptips: true,
       toptips: msg
     });
-    this.state.warnTimer = setTimeout(() => {
+    setTimeout(() => {
       this.setState({
         showToptips: false
       });

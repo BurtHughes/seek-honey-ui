@@ -43,7 +43,7 @@ class Mine extends React.Component {
             />
             <Route path="/info" component={()=>{return <Info logedOut={this.logedOut}/>}}/>
             <Route path="/nologin" component={NoLogin}/>
-            <Route path="/login" component={()=>{return <Login logedIn={this.logedIn}/>}} />
+            <Route path="/login" component={()=>{return <Login logedIn={this.logedIn} toast={this.props.g_toast}/>}} />
             <Route path="/register" component={()=>{return <Register toast={this.props.g_toast}/>}} />
           </Switch>
         </div>
