@@ -7,11 +7,6 @@ import Home from "./home";
 import News from "./news";
 import Identify from "./identify";
 import Mine from "./mine/mine";
-import { Provider } from "react-redux";
-import { createStore } from "redux";
-import reducers from "./reducers";
-
-let store = createStore(reducers);
 
 export default class Content extends React.Component {
   state = {
@@ -45,45 +40,43 @@ export default class Content extends React.Component {
 
   render() {
     return (
-      <Provider store={store}>
-        <Tab>
-          <Toast show={this.state.showToast} icon={this.state.toastIcon}>
-            {this.state.toastContent}
-          </Toast>
-          <TabBody>
-            <Home {...this.pageProp(0)} />
-            <News {...this.pageProp(1)} />
-            <Identify {...this.pageProp(2)} />
-            <Mine {...this.pageProp(3)} />
-          </TabBody>
-          <TabBar>
-            <TabBarItem
-              active={this.state.tab === 0}
-              onClick={e => this.setState({ tab: 0 })}
-              icon={<img src={HomeBtn} alt="" />}
-              label="首页"
-            />
-            <TabBarItem
-              active={this.state.tab === 1}
-              onClick={e => this.setState({ tab: 1 })}
-              icon={<img src={ListBtn} alt="" />}
-              label="资讯"
-            />
-            <TabBarItem
-              active={this.state.tab === 2}
-              onClick={e => this.setState({ tab: 2 })}
-              icon={<img src={MineBtn} alt="" />}
-              label="鉴别"
-            />
-            <TabBarItem
-              active={this.state.tab === 3}
-              onClick={e => this.setState({ tab: 3 })}
-              icon={<img src={HomeBtn} alt="" />}
-              label="我的"
-            />
-          </TabBar>
-        </Tab>
-      </Provider>
+      <Tab>
+        <Toast show={this.state.showToast} icon={this.state.toastIcon}>
+          {this.state.toastContent}
+        </Toast>
+        <TabBody>
+          <Home {...this.pageProp(0)} />
+          <News {...this.pageProp(1)} />
+          <Identify {...this.pageProp(2)} />
+          <Mine {...this.pageProp(3)} />
+        </TabBody>
+        <TabBar>
+          <TabBarItem
+            active={this.state.tab === 0}
+            onClick={e => this.setState({ tab: 0 })}
+            icon={<img src={HomeBtn} alt="" />}
+            label="首页"
+          />
+          <TabBarItem
+            active={this.state.tab === 1}
+            onClick={e => this.setState({ tab: 1 })}
+            icon={<img src={ListBtn} alt="" />}
+            label="资讯"
+          />
+          <TabBarItem
+            active={this.state.tab === 2}
+            onClick={e => this.setState({ tab: 2 })}
+            icon={<img src={MineBtn} alt="" />}
+            label="鉴别"
+          />
+          <TabBarItem
+            active={this.state.tab === 3}
+            onClick={e => this.setState({ tab: 3 })}
+            icon={<img src={HomeBtn} alt="" />}
+            label="我的"
+          />
+        </TabBar>
+      </Tab>
     );
   }
 }

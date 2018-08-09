@@ -1,4 +1,4 @@
-import React from "react";
+import React from "react"
 import {
   CellsTitle,
   Form,
@@ -9,27 +9,34 @@ import {
   Input,
   ButtonArea,
   Button
-} from "react-weui";
-import { withRouter } from "react-router-dom";
-import { POST } from "../../common/request";
-import { Sys } from "../../common/constant";
+} from "react-weui"
+import { withRouter } from "react-router-dom"
+import { POST } from "../../common/request"
+import { Sys } from "../../common/constant"
+import { connect } from 'react-redux'
+import { login } from '../../model/actions'
+import { TestUrl } from '../../test-data/url-list'
+
+const mapDispatchToProps = dispatch => {
+  return {
+    setLogin: obj => {
+      obj['isLogin'] = true;
+      localStorage.setItem("userInfo",JSON.stringify(obj));
+      let action = login(obj);
+      dispatch(action);
+    }
+  }
+}
 
 class Login extends React.Component {
-  constructor() {
+  constructor({setLogin}) {
     super();
     this.logedIn = this.logedIn.bind(this);
     this.back = this.back.bind(this);
+    this.setLogin = setLogin;
   }
 
   logedIn = () => {
-    // POST({ path: TestUrl.login }).then(res => {
-    //   if (res.code === 0) {
-    //     this.props.logedIn();
-    //     this.props.history.push("/info");
-    //   } else {
-    //     alert('登录失败');
-    //   }
-    // });
     let name = document.getElementById("name").value;
     let pwd = document.getElementById("pwd").value;
     if (name === '') {
@@ -45,7 +52,8 @@ class Login extends React.Component {
       password: document.getElementById("pwd").value
     };
     POST({
-      path: 'login',
+      //path: 'login',
+      path: TestUrl.login2,
       param: param,
       toast: this.props.toast
     })
@@ -53,7 +61,7 @@ class Login extends React.Component {
         if (res.code === 0) {
           this.props.toast('登录成功', 1500, Sys.ICON_SUCC_S);
           setTimeout(()=>{
-            this.props.logedIn();
+            this.setLogin(res.data);
             this.props.history.push("/info");
           },1500);
         } else {
@@ -97,4 +105,5 @@ class Login extends React.Component {
     );
   };
 }
-export default withRouter(Login);
+Login = connect(null,mapDispatchToProps)(Login)
+export default withRouter(Login)

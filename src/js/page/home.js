@@ -23,7 +23,8 @@ export default class Home extends React.Component {
     constructor() {
         super();
         let success = res => {
-            console.log('成功:' + res);
+            //console.log('成功:');
+            //console.log(res);
             this.setState({ dataList: res.data, showLoading: false });
         };
         let fail = res => {

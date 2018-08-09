@@ -10,45 +10,34 @@ import Info from "./info";
 import NoLogin from "./no-login";
 import Register from "./register";
 import Login from "./login";
+import { connect } from "react-redux";
+
+const mapStateToProps = (state, owmProps) => {
+  let isLogin = state.auth.isLogin || JSON.parse(localStorage.getItem("userInfo"));
+  return { isLogin };
+}
 
 class Mine extends React.Component {
-  state = {
-    isLogin: false
-  };
-
-  constructor(){
-    super();
-    this.logedIn = this.logedIn.bind(this);
-  }
-
-  logedIn = () => {
-    this.setState({isLogin: true});
-  }
-
-  logedOut = () => {
-    this.setState({isLogin: false});
-  }
-
   render = () => {
+    let { display, isLogin, g_toast } = this.props;
     return (
       <Router>
-        <div style={{ display: this.props.display }}>
+        <div style={{ display: display }}>
           <Switch>
-            <Route
-              path="/"
-              exact
+            <Route path="/" exact
               render={() => {
-                return this.state.isLogin ? <Redirect to="/info"/> : <Redirect to="/nologin"/>;
+                return isLogin ? <Redirect to="/info"/> : <Redirect to="/nologin"/>;
               }}
             />
-            <Route path="/info" component={()=>{return <Info logedOut={this.logedOut}/>}}/>
+            <Route path="/info" component={()=>{return <Info />}}/>
             <Route path="/nologin" component={NoLogin}/>
-            <Route path="/login" component={()=>{return <Login logedIn={this.logedIn} toast={this.props.g_toast}/>}} />
-            <Route path="/register" component={()=>{return <Register toast={this.props.g_toast}/>}} />
+            <Route path="/login" component={()=>{return <Login toast={g_toast}/>}} />
+            <Route path="/register" component={()=>{return <Register toast={g_toast}/>}} />
           </Switch>
         </div>
       </Router>
     );
-  };
+  }
 }
+Mine = connect(mapStateToProps)(Mine)
 export default withRouter(Mine)
