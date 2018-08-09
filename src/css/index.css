@@ -49,3 +49,10 @@ body{
     position: fixed!important;
 }
 /* some end */
+
+/* mine start */
+.cell-body{
+    padding: 5px 10px;
+    width: -webkit-fill-available;
+}
+/* mine end */

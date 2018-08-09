@@ -52,8 +52,8 @@ class Login extends React.Component {
       password: document.getElementById("pwd").value
     };
     POST({
-      //path: 'login',
-      path: TestUrl.login2,
+      path: 'login',
+      //path: TestUrl.login2,
       param: param,
       toast: this.props.toast
     })

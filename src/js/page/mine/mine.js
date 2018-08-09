@@ -10,6 +10,7 @@ import Info from "./info";
 import NoLogin from "./no-login";
 import Register from "./register";
 import Login from "./login";
+import UserDetail from "./detail";
 import { connect } from "react-redux";
 
 const mapStateToProps = (state, owmProps) => {
@@ -33,6 +34,7 @@ class Mine extends React.Component {
             <Route path="/nologin" component={NoLogin}/>
             <Route path="/login" component={()=>{return <Login toast={g_toast}/>}} />
             <Route path="/register" component={()=>{return <Register toast={g_toast}/>}} />
+            <Route path="/detail" component={UserDetail} />
           </Switch>
         </div>
       </Router>

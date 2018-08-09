@@ -1,7 +1,7 @@
 import 'whatwg-fetch'
 // Restfult风格请求
-let baseUrl = 'https://api.myjson.com/bins/'
-let isPrd = false;//false-测试 true-生产
+let baseUrl = 'http://4gufae.natappfree.cc/'
+let isPrd = true;//false-测试 true-生产
 
 let req = (obj) => {
     let path = '';
