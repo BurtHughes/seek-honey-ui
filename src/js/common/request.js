@@ -1,6 +1,6 @@
 import 'whatwg-fetch'
 // Restfult风格请求
-let baseUrl = 'http://4gufae.natappfree.cc/'
+let baseUrl = 'http://127.0.0.1/'
 let isPrd = true;//false-测试 true-生产
 
 let req = (obj) => {

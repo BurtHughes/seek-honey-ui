@@ -53,7 +53,7 @@ class Info extends React.Component {
                             <Cells>
                                 <Cell onClick={jump} href="javascript:;" access>
                                     <CellHeader>{appMsgIcon}</CellHeader>
-                                    <CellBody class="cell-body">
+                                    <CellBody className="cell-body">
                                         <p>{info ? info.user_name : ''}</p>
                                         <p>性别：{info ? info.sex : ''}</p>
                                     </CellBody>
