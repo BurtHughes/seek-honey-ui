@@ -17,7 +17,7 @@ import 'whatwg-fetch';
 export default class Home extends React.Component {
     state = {
         dataList: [],
-        showLoading: true
+        showLoading: false
     }
 
     constructor() {
@@ -31,7 +31,7 @@ export default class Home extends React.Component {
             console.log('失败:' + res);
             this.setState({ showLoading: false });
         };
-        GET({ path: TestUrl.productList }).then(success, fail);
+        //GET({ path: TestUrl.productList }).then(success, fail);
     }
 
     cellList = () => {
