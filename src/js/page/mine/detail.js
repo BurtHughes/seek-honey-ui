@@ -35,6 +35,7 @@ const mapStateToProps = (state, ownProps) => {
 class UserDetail extends React.Component {
   state = {
     isShow: false,
+    prop: '',
     menus: [{
       label: '选项1',
       onClick: () => {}
@@ -66,11 +67,16 @@ class UserDetail extends React.Component {
     this.hide = this.hide.bind(this);
     this.show = this.show.bind(this);
   }
-  show = (title) => {this.setState({isShow: true, title: title})}
+  show = (prop) => {this.setState({isShow: true, prop})}
   hide = () => {this.setState({isShow: false})}
   back = () => this.props.history.push("/info")
   render() {
     let { name, sex, country, province, city } = this.props.info;
+    let map = {
+      'name': '用户名'
+    };
+    let propValue = this.props.info[this.state.prop];
+    let propText = map[this.state.prop];
     return (
       <div>
         {/* <ActionSheet
@@ -85,7 +91,8 @@ class UserDetail extends React.Component {
                 buttons={this.state.buttons}
                 show={this.state.isShow}
         >
-          <Input type="text" defaultValue={name} placeholder="输入用户名"/>
+          <label htmlFor="update_input">{propText}</label>
+          <Input id="update_input" className="text-center" type="text" defaultValue={propValue} placeholder={"输入"+propText}/>
         </Dialog>
         <Cells>
           <Cell href="javascript:;" access>
@@ -96,7 +103,7 @@ class UserDetail extends React.Component {
             <CellBody>用户名</CellBody>
             <CellFooter>{name}</CellFooter>
           </Cell>
-          <Cell href="javascript:;" access>
+          <Cell onClick={()=>this.show('性别')} href="javascript:;" access>
             <CellBody>性别</CellBody>
             <CellFooter>{sex}</CellFooter>
           </Cell>

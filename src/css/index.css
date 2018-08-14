@@ -55,4 +55,7 @@ body{
     padding: 5px 10px;
     width: -webkit-fill-available;
 }
+.text-center{
+    text-align: center;
+}
 /* mine end */
