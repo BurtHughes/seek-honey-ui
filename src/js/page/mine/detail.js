@@ -3,11 +3,17 @@ import { withRouter } from "react-router-dom";
 import {
   Cell,
   Cells,
+  CellHeader,
   CellBody,
   CellFooter,
   Button,
   ButtonArea,
-  ActionSheet
+  ActionSheet,
+  Dialog,
+  Form,
+  FormCell,
+  Label,
+  Input
 } from "react-weui";
 import { connect } from "react-redux";
 
@@ -39,35 +45,56 @@ class UserDetail extends React.Component {
     actions: [{
       label: '取消',
       onClick: this.hide
-    }]
+    }],
+    title: '',
+    buttons: [
+      {
+        type: 'default',
+        label: '取消',
+        onClick: ()=>this.hide()
+      },
+      {
+        type: 'primary',
+        label: '确定',
+        onClick: ()=>this.hide()
+      }
+    ]
   }
   constructor() {
     super();
     this.back = this.back.bind(this);
     this.hide = this.hide.bind(this);
+    this.show = this.show.bind(this);
   }
+  show = (title) => {this.setState({isShow: true, title: title})}
   hide = () => {this.setState({isShow: false})}
   back = () => this.props.history.push("/info")
-  updateImg = () => {this.setState({isShow: true})}
   render() {
-    let { user_name, sex, country, province, city } = this.props.info;
+    let { name, sex, country, province, city } = this.props.info;
     return (
       <div>
-        <ActionSheet
+        {/* <ActionSheet
           type="ios"
           menus={this.state.menus}
           actions={this.state.actions}
           show={this.state.isShow}
           onRequestClose={e=>this.setState({isShow: false})}
-        />
+        /> */}
+        <Dialog type="ios" 
+                // title={this.state.title}
+                buttons={this.state.buttons}
+                show={this.state.isShow}
+        >
+          <Input type="text" defaultValue={name} placeholder="输入用户名"/>
+        </Dialog>
         <Cells>
-          <Cell onClick={this.updateImg} href="javascript:;" access>
+          <Cell href="javascript:;" access>
             <CellBody>头像</CellBody>
             <CellFooter>{appMsgIcon}</CellFooter>
           </Cell>
-          <Cell href="javascript:;" access>
+          <Cell onClick={()=>this.show('用户名')} href="javascript:;" access>
             <CellBody>用户名</CellBody>
-            <CellFooter>{user_name}</CellFooter>
+            <CellFooter>{name}</CellFooter>
           </Cell>
           <Cell href="javascript:;" access>
             <CellBody>性别</CellBody>
