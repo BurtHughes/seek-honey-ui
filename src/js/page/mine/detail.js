@@ -38,10 +38,10 @@ class UserDetail extends React.Component {
     prop: '',
     menus: [{
       label: '选项1',
-      onClick: () => {}
-    },{
+      onClick: () => { }
+    }, {
       label: '选项2',
-      onClick: () => {}
+      onClick: () => { }
     }],
     actions: [{
       label: '取消',
@@ -52,12 +52,12 @@ class UserDetail extends React.Component {
       {
         type: 'default',
         label: '取消',
-        onClick: ()=>this.hide()
+        onClick: () => this.hide()
       },
       {
         type: 'primary',
         label: '确定',
-        onClick: ()=>this.hide()
+        onClick: () => this.hide()
       }
     ]
   }
@@ -67,15 +67,21 @@ class UserDetail extends React.Component {
     this.hide = this.hide.bind(this);
     this.show = this.show.bind(this);
   }
-  show = (prop) => {this.setState({isShow: true, prop})}
-  hide = () => {this.setState({isShow: false})}
+  componentDidUpdate () {
+    document.getElementById('update_input').value = this.props.info[this.state.prop];
+  }
+  show = (prop) => { this.setState({isShow: true,prop}) }
+  hide = () => { this.setState({ isShow: false }) }
   back = () => this.props.history.push("/info")
   render() {
     let { name, sex, country, province, city } = this.props.info;
     let map = {
-      'name': '用户名'
+      name: '用户名',
+      sex: '性别',
+      country: '国籍',
+      province: '省份',
+      city: '城市'
     };
-    let propValue = this.props.info[this.state.prop];
     let propText = map[this.state.prop];
     return (
       <div>
@@ -86,36 +92,39 @@ class UserDetail extends React.Component {
           show={this.state.isShow}
           onRequestClose={e=>this.setState({isShow: false})}
         /> */}
-        <Dialog type="ios" 
-                // title={this.state.title}
-                buttons={this.state.buttons}
-                show={this.state.isShow}
+        <Dialog type="ios"
+          buttons={this.state.buttons}
+          show={this.state.isShow}
         >
-          <label htmlFor="update_input">{propText}</label>
-          <Input id="update_input" className="text-center" type="text" defaultValue={propValue} placeholder={"输入"+propText}/>
+          <h4>{propText}</h4><br />
+          <Input id="update_input"
+            className="text-center"
+            type="text"
+            placeholder={"输入" + propText}
+          />
         </Dialog>
         <Cells>
           <Cell href="javascript:;" access>
             <CellBody>头像</CellBody>
             <CellFooter>{appMsgIcon}</CellFooter>
           </Cell>
-          <Cell onClick={()=>this.show('用户名')} href="javascript:;" access>
+          <Cell onClick={() => this.show('name')} href="javascript:;" access>
             <CellBody>用户名</CellBody>
             <CellFooter>{name}</CellFooter>
           </Cell>
-          <Cell onClick={()=>this.show('性别')} href="javascript:;" access>
+          <Cell onClick={() => this.show('sex')} href="javascript:;" access>
             <CellBody>性别</CellBody>
             <CellFooter>{sex}</CellFooter>
           </Cell>
-          <Cell href="javascript:;" access>
+          <Cell onClick={() => this.show('country')} href="javascript:;" access>
             <CellBody>国籍</CellBody>
             <CellFooter>{country}</CellFooter>
           </Cell>
-          <Cell href="javascript:;" access>
+          <Cell onClick={() => this.show('province')} href="javascript:;" access>
             <CellBody>省份</CellBody>
             <CellFooter>{province}</CellFooter>
           </Cell>
-          <Cell href="javascript:;" access>
+          <Cell onClick={() => this.show('city')} href="javascript:;" access>
             <CellBody>城市</CellBody>
             <CellFooter>{city}</CellFooter>
           </Cell>
