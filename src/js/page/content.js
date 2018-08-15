@@ -7,8 +7,28 @@ import Home from "./home";
 import News from "./news";
 import Identify from "./identify";
 import Mine from "./mine/mine";
+import {
+  loading_toast,
+  success_toast,
+  error_toast,
+  hide_toast
+} from "../../model/actions";
+import { connect } from "react-redux";
 
-export default class Content extends React.Component {
+const mapStateToProps = (state, ownProps) => {
+  let { show, text, icon } = state;
+  return { toastShow: show, toastText: text, toastIcon: icon };
+};
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    hideToast: () => {
+      dispatch(hide_toast());
+    }
+  };
+};
+
+class Content extends React.Component {
   state = {
     tab: 0,
     isLogIn: false,
@@ -41,8 +61,8 @@ export default class Content extends React.Component {
   render() {
     return (
       <Tab>
-        <Toast show={this.state.showToast} icon={this.state.toastIcon}>
-          {this.state.toastContent}
+        <Toast show={this.props.toastShow} icon={this.props.toastIcon}>
+          {this.props.toastText}
         </Toast>
         <TabBody>
           <Home {...this.pageProp(0)} />
@@ -80,3 +100,8 @@ export default class Content extends React.Component {
     );
   }
 }
+Content = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Content);
+export default Content;

@@ -15,7 +15,6 @@ import { POST } from "../../common/request"
 import { Sys } from "../../common/constant"
 import { connect } from 'react-redux'
 import { login } from '../../model/actions'
-import { TestUrl } from '../../test-data/url-list'
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -53,7 +52,6 @@ class Login extends React.Component {
     };
     POST({
       path: 'login',
-      //path: TestUrl.login2,
       param: param,
       toast: this.props.toast
     })
