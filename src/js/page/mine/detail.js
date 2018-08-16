@@ -11,7 +11,8 @@ import {
   Input
 } from "react-weui";
 import { connect } from "react-redux";
-import { toast } from '../../common/toast'
+import { toast } from '../../common/toast';
+import { PUT } from '../../common/request';
 
 const appMsgIcon = (
   <img
@@ -76,9 +77,20 @@ class UserDetail extends React.Component {
   update = () => {
     this.hide();
     this.props.showToast('loading');
-    setTimeout(() => {
+    let param = {
+      [this.state.prop]: document.getElementById('update_input').value
+    };
+    PUT({
+      path: 'user',
+      param
+    }).then(res => {
       this.props.hideToast();
-    }, 1000);
+      if (res.code === 0) {
+        //this.props.hideToast();
+      } else {
+        this.props.showToast('error', res.msg);
+      }
+    });
   }
   show = (prop) => { this.setState({ isShow: true, prop }) }
   hide = () => { this.setState({ isShow: false }) }

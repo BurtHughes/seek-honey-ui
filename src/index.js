@@ -9,7 +9,7 @@ import rootReducer from "./js/model/reducers"
 import "weui"
 import "react-weui/build/packages/react-weui.css"
 
-let store = createStore(rootReducer)
+export let store = createStore(rootReducer);
 
 class App extends React.Component {
   render() {
