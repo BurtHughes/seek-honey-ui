@@ -3,19 +3,15 @@ import { withRouter } from "react-router-dom";
 import {
   Cell,
   Cells,
-  CellHeader,
   CellBody,
   CellFooter,
   Button,
   ButtonArea,
-  ActionSheet,
   Dialog,
-  Form,
-  FormCell,
-  Label,
   Input
 } from "react-weui";
 import { connect } from "react-redux";
+import { toast } from '../../common/toast'
 
 const appMsgIcon = (
   <img
@@ -30,6 +26,12 @@ const mapStateToProps = (state, ownProps) => {
   let info =
     state.auth.userInfo || JSON.parse(localStorage.getItem("userInfo"));
   return { info };
+};
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    ...toast(dispatch)
+  };
 };
 
 class UserDetail extends React.Component {
@@ -57,7 +59,7 @@ class UserDetail extends React.Component {
       {
         type: 'primary',
         label: '确定',
-        onClick: () => this.hide()
+        onClick: () => this.update()
       }
     ]
   }
@@ -66,11 +68,19 @@ class UserDetail extends React.Component {
     this.back = this.back.bind(this);
     this.hide = this.hide.bind(this);
     this.show = this.show.bind(this);
+    this.update = this.update.bind(this);
   }
-  componentDidUpdate () {
+  componentDidUpdate() {
     document.getElementById('update_input').value = this.props.info[this.state.prop];
   }
-  show = (prop) => { this.setState({isShow: true,prop}) }
+  update = () => {
+    this.hide();
+    this.props.showToast('loading');
+    setTimeout(() => {
+      this.props.hideToast();
+    }, 1000);
+  }
+  show = (prop) => { this.setState({ isShow: true, prop }) }
   hide = () => { this.setState({ isShow: false }) }
   back = () => this.props.history.push("/info")
   render() {
@@ -85,13 +95,6 @@ class UserDetail extends React.Component {
     let propText = map[this.state.prop];
     return (
       <div>
-        {/* <ActionSheet
-          type="ios"
-          menus={this.state.menus}
-          actions={this.state.actions}
-          show={this.state.isShow}
-          onRequestClose={e=>this.setState({isShow: false})}
-        /> */}
         <Dialog type="ios"
           buttons={this.state.buttons}
           show={this.state.isShow}
@@ -139,5 +142,5 @@ class UserDetail extends React.Component {
     );
   }
 }
-UserDetail = connect(mapStateToProps)(UserDetail);
+UserDetail = connect(mapStateToProps, mapDispatchToProps)(UserDetail);
 export default withRouter(UserDetail);

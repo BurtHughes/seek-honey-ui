@@ -12,20 +12,12 @@ import {
   success_toast,
   error_toast,
   hide_toast
-} from "../../model/actions";
+} from "../model/actions";
 import { connect } from "react-redux";
 
 const mapStateToProps = (state, ownProps) => {
-  let { show, text, icon } = state;
+  let { show, text, icon } = state.toast.toast;
   return { toastShow: show, toastText: text, toastIcon: icon };
-};
-
-const mapDispatchToProps = (dispatch, ownProps) => {
-  return {
-    hideToast: () => {
-      dispatch(hide_toast());
-    }
-  };
 };
 
 class Content extends React.Component {
@@ -101,7 +93,6 @@ class Content extends React.Component {
   }
 }
 Content = connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapStateToProps
 )(Content);
 export default Content;

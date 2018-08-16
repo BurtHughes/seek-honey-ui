@@ -15,20 +15,21 @@ import { POST } from "../../common/request"
 import { Sys } from "../../common/constant"
 import { connect } from 'react-redux'
 import { login } from '../../model/actions'
+import { toast } from '../../common/toast'
 
 const mapDispatchToProps = dispatch => {
   return {
     setLogin: obj => {
       obj['isLogin'] = true;
-      localStorage.setItem("userInfo",JSON.stringify(obj));
-      let action = login(obj);
-      dispatch(action);
-    }
+      localStorage.setItem("userInfo", JSON.stringify(obj));
+      dispatch(login(obj));
+    },
+    ...toast(dispatch)
   }
 }
 
 class Login extends React.Component {
-  constructor({setLogin}) {
+  constructor({ setLogin }) {
     super();
     this.logedIn = this.logedIn.bind(this);
     this.back = this.back.bind(this);
@@ -57,13 +58,12 @@ class Login extends React.Component {
     })
       .then(res => {
         if (res.code === 0) {
-          this.props.toast('登录成功', 1500, Sys.ICON_SUCC_S);
-          setTimeout(()=>{
+          this.props.showToast('success', '登录成功', 1000, ()=>{
             this.setLogin(res.data);
             this.props.history.push("/info");
-          },1500);
+          });
         } else {
-          this.props.toast(res.msg, 1500, Sys.ICON_WARN_S);
+          this.props.showToast('error', res.msg, 1500);
         }
       });
   };
@@ -103,5 +103,5 @@ class Login extends React.Component {
     );
   };
 }
-Login = connect(null,mapDispatchToProps)(Login)
+Login = connect(null, mapDispatchToProps)(Login)
 export default withRouter(Login)

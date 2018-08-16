@@ -17,16 +17,17 @@ export const loading_toast = () => {
   };
 };
 
-export const success_toast = () => {
+export const success_toast = (text = "成功") => {
   return {
-    type: "SUCCESS_TOAST"
+    type: "SUCCESS_TOAST",
+    text
   };
 };
 
-export const error_toast = err => {
+export const error_toast = (text = "错误") => {
   return {
     type: "ERROR_TOAST",
-    errMsg: err
+    text
   };
 };
 

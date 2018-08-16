@@ -8,20 +8,23 @@ const toast = (state = {}, action) => {
     case "SUCCESS_TOAST":
       return {
         ...state,
-        toast: { show: true, text: "成功", icon: "success-no-circle" }
+        toast: { show: true, text: action.text, icon: "success-no-circle" }
       };
     case "ERROR_TOAST":
       return {
         ...state,
-        toast: { show: true, text: action.errMsg, icon: "warn" }
+        toast: { show: true, text: action.text, icon: "warn" }
       };
     case "HIDE_TOAST":
       return {
         ...state,
-        toast: { show: false }
+        toast: { show: false, text: "", icon: "" }
       };
     default:
-      return state;
+      return {
+        ...state,
+        toast: { show: false, text: "", icon: "" }
+      };
   }
 };
 export default toast;
