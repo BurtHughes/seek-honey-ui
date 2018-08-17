@@ -81,13 +81,11 @@ class UserDetail extends React.Component {
       [this.state.prop]: document.getElementById('update_input').value
     };
     PUT({
-      path: 'user',
+      path: 'user2',
       param
     }).then(res => {
       this.props.hideToast();
-      if (res.code === 0) {
-        //this.props.hideToast();
-      } else {
+      if (res.code !== 0) {
         this.props.showToast('error', res.msg);
       }
     });
