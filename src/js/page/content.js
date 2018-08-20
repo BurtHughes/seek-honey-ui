@@ -24,30 +24,18 @@ class Content extends React.Component {
   state = {
     tab: 0,
     isLogIn: false,
-    showToast: false,
-    toastContent: "",
-    toastTimer: null,
     toastIcon: null
   };
 
   constructor() {
     super();
     this.pageProp = this.pageProp.bind(this);
-    this.showToast = this.showToast.bind(this);
   }
 
   pageProp = index => {
     return {
-      display: this.state.tab === index ? null : "none",
-      g_toast: this.showToast
+      display: this.state.tab === index ? null : "none"
     };
-  };
-
-  showToast = (msg, time = 1500, icon = null) => {
-    this.setState({ showToast: true, toastContent: msg, toastIcon: icon });
-    setTimeout(() => {
-      this.setState({ showToast: false });
-    }, time);
   };
 
   render() {

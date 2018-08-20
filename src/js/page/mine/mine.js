@@ -21,7 +21,7 @@ const mapStateToProps = (state, owmProps) => {
 
 class Mine extends React.Component {
   render = () => {
-    let { display, isLogin, g_toast } = this.props;
+    let { display, isLogin } = this.props;
     return (
       <Router>
         <div style={{ display: display }}>
@@ -37,25 +37,10 @@ class Mine extends React.Component {
                 );
               }}
             />
-            <Route
-              path="/info"
-              component={() => {
-                return <Info />;
-              }}
-            />
+            <Route path="/info" component={Info} />
             <Route path="/nologin" component={NoLogin} />
-            <Route
-              path="/login"
-              component={() => {
-                return <Login toast={g_toast} />;
-              }}
-            />
-            <Route
-              path="/register"
-              component={() => {
-                return <Register toast={g_toast} />;
-              }}
-            />
+            <Route path="/login" component={Login} />
+            <Route path="/register" component={Register} />
             <Route path="/detail" component={UserDetail} />
           </Switch>
         </div>

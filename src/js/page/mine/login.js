@@ -12,7 +12,6 @@ import {
 } from "react-weui"
 import { withRouter } from "react-router-dom"
 import { POST } from "../../common/request"
-import { Sys } from "../../common/constant"
 import { connect } from 'react-redux'
 import { login } from '../../model/actions'
 import { toast } from '../../common/toast'
@@ -29,11 +28,10 @@ const mapDispatchToProps = dispatch => {
 }
 
 class Login extends React.Component {
-  constructor({ setLogin }) {
+  constructor() {
     super();
     this.logedIn = this.logedIn.bind(this);
     this.back = this.back.bind(this);
-    this.setLogin = setLogin;
   }
 
   logedIn = () => {
@@ -59,11 +57,9 @@ class Login extends React.Component {
       .then(res => {
         if (res.code === 0) {
           this.props.showToast('success', '登录成功', 1000, ()=>{
-            this.setLogin(res.data);
+            this.props.setLogin(res.data);
             this.props.history.push("/info");
           });
-        } else {
-          this.props.showToast('error', res.msg, 1500);
         }
       });
   };

@@ -1,82 +1,78 @@
 import "whatwg-fetch";
-import React from "react";
-import { connect } from "react-redux";
-import { error_toast, hide_toast } from "../model/actions";
 import { store } from "../../index";
 import { toast } from "./toast";
 
 // Restfult风格请求
-let baseUrl = "http://127.0.0.1/";
+let baseUrl = "http://4g5iw4.natappfree.cc/";
 let isPrd = true; //false-测试 true-生产
 
-//let { showToast, hideToast } = toast(store.dispatch);
-// const mapDispatchToProps = (dispatch, ownProps) => {
-//     return {
-//         ...toast(dispatch)
-//     };
-// };
-
 let request = ({ path, method, param }) => {
-    if (typeof path === "string") {
-        if (path.indexOf("http") !== 0) {
-            path = baseUrl + path;
-        }
-    } else {
-        return "请求路径错误";
+  if (typeof path === "string") {
+    if (path.indexOf("http") !== 0) {
+      path = baseUrl + path;
     }
+  } else {
+    return "请求路径错误";
+  }
 
-    let promise = (resolve, reject) => {
-        let p = { method };
-        isPrd && (p["body"] = JSON.stringify(param));
-        fetch(path, p)
-            .then(res => {
-                if (res.ok) {
-                    return res.json();
-                } else {
-                    let msg = "请求失败:" + res.msg;
-                    this.props.showToast("error", msg);
-                    console.error(msg);
-                    reject({ status: res.status });
-                }
-            })
-            .then(res => {
-                resolve(res);
-            })
-            .catch(err => {
-                let msg = "请求出错:" + err;
-                this.props.showToast("error", msg);
-                console.error(msg);
-                reject({ status: -1 });
-            });
-    };
+  let promise = (resolve, reject) => {
+    let p = { method };
+    isPrd && (p["body"] = JSON.stringify(param));
+    const { showToast, hideToast } = toast(store.dispatch);
+    fetch(path, p)
+      .then(res => {
+        hideToast();
+        if (res.ok) {
+          return res.json();
+        } else {
+          let msg = "请求失败:" + res.msg;
+          showToast("error", msg);
+          console.error(msg);
+          reject({ status: res.status });
+        }
+      })
+      .then(res => {
+        if (res.code !== 0) {
+          showToast("error", res.msg || "失败");
+        }
+        resolve(res);
+      })
+      .catch(err => {
+        hideToast();
+        let msg = "请求出错:" + err;
+        showToast("error", msg);
+        console.error(msg);
+        reject({ status: -1 });
+      });
+  };
 
-    return new Promise(promise);
-}
+  return new Promise(promise);
+};
 
 export let GET = obj => {
-    return request({
-        ...obj,
-        method: "get"
-    });
+  return request({
+    ...obj,
+    method: "get"
+  });
 };
 
 export let POST = obj => {
-    return request({
-        ...obj,
-        method: isPrd ? "post" : "get"
-    });
+  return request({
+    ...obj,
+    method: isPrd ? "post" : "get"
+  });
 };
 
 export let PUT = obj => {
-    return request({
-        ...obj,
-        method: isPrd ? "put" : "get"
-    });
+  return request({
+    ...obj,
+    method: isPrd ? "put" : "get"
+  });
 };
 
 export let DELETE = obj => {
-    return request({
-        ...obj,
-        method: isPrd ? "delete" : "get"
-    });
+  return request({
+    ...obj,
+    method: isPrd ? "delete" : "get"
+  });
 };

@@ -11,8 +11,9 @@ import {
   Input
 } from "react-weui";
 import { connect } from "react-redux";
-import { toast } from '../../common/toast';
-import { PUT } from '../../common/request';
+import { toast } from "../../common/toast";
+import { PUT } from "../../common/request";
+import { update_user } from "../../model/actions";
 
 const appMsgIcon = (
   <img
@@ -31,39 +32,47 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    ...toast(dispatch)
+    ...toast(dispatch),
+    updateUser: info => {
+      dispatch(update_user(info));
+    }
   };
 };
 
 class UserDetail extends React.Component {
   state = {
     isShow: false,
-    prop: '',
-    menus: [{
-      label: '选项1',
-      onClick: () => { }
-    }, {
-      label: '选项2',
-      onClick: () => { }
-    }],
-    actions: [{
-      label: '取消',
-      onClick: this.hide
-    }],
-    title: '',
+    prop: "",
+    menus: [
+      {
+        label: "选项1",
+        onClick: () => {}
+      },
+      {
+        label: "选项2",
+        onClick: () => {}
+      }
+    ],
+    actions: [
+      {
+        label: "取消",
+        onClick: this.hide
+      }
+    ],
+    title: "",
     buttons: [
       {
-        type: 'default',
-        label: '取消',
+        type: "default",
+        label: "取消",
         onClick: () => this.hide()
       },
       {
-        type: 'primary',
-        label: '确定',
+        type: "primary",
+        label: "确定",
         onClick: () => this.update()
       }
     ]
-  }
+  };
   constructor() {
     super();
     this.back = this.back.bind(this);
@@ -72,45 +81,60 @@ class UserDetail extends React.Component {
     this.update = this.update.bind(this);
   }
   componentDidUpdate() {
-    document.getElementById('update_input').value = this.props.info[this.state.prop];
+    document.getElementById("update_input").value = this.props.info[
+      this.state.prop
+    ];
   }
   update = () => {
     this.hide();
-    this.props.showToast('loading');
     let param = {
-      [this.state.prop]: document.getElementById('update_input').value
+      [this.state.prop]: document.getElementById("update_input").value,
+      id: this.props.info.id
     };
-    PUT({
-      path: 'user2',
-      param
-    }).then(res => {
-      this.props.hideToast();
-      if (res.code !== 0) {
-        this.props.showToast('error', res.msg);
-      }
-    });
-  }
-  show = (prop) => { this.setState({ isShow: true, prop }) }
-  hide = () => { this.setState({ isShow: false }) }
-  back = () => this.props.history.push("/info")
+    this.props.showToast("loading");
+    setTimeout(() => {
+      PUT({
+        path: "user",
+        param
+      }).then(res => {
+        if (res.code === 0) {
+          this.props.updateUser({
+            key: this.state.prop,
+            value: param[this.state.prop]
+          });
+          this.props.showToast("success", res.msg);
+        }
+      });
+    }, 1000);
+  };
+  show = prop => {
+    this.setState({ isShow: true, prop });
+  };
+  hide = () => {
+    this.setState({ isShow: false });
+  };
+  back = () => this.props.history.push("/info");
   render() {
     let { name, sex, country, province, city } = this.props.info;
     let map = {
-      name: '用户名',
-      sex: '性别',
-      country: '国籍',
-      province: '省份',
-      city: '城市'
+      name: "用户名",
+      sex: "性别",
+      country: "国籍",
+      province: "省份",
+      city: "城市"
     };
     let propText = map[this.state.prop];
     return (
       <div>
-        <Dialog type="ios"
+        <Dialog
+          type="ios"
           buttons={this.state.buttons}
           show={this.state.isShow}
         >
-          <h4>{propText}</h4><br />
-          <Input id="update_input"
+          <h4>{propText}</h4>
+          <br />
+          <Input
+            id="update_input"
             className="text-center"
             type="text"
             placeholder={"输入" + propText}
@@ -121,23 +145,27 @@ class UserDetail extends React.Component {
             <CellBody>头像</CellBody>
             <CellFooter>{appMsgIcon}</CellFooter>
           </Cell>
-          <Cell onClick={() => this.show('name')} href="javascript:;" access>
+          <Cell onClick={() => this.show("name")} href="javascript:;" access>
             <CellBody>用户名</CellBody>
             <CellFooter>{name}</CellFooter>
           </Cell>
-          <Cell onClick={() => this.show('sex')} href="javascript:;" access>
+          <Cell onClick={() => this.show("sex")} href="javascript:;" access>
             <CellBody>性别</CellBody>
             <CellFooter>{sex}</CellFooter>
           </Cell>
-          <Cell onClick={() => this.show('country')} href="javascript:;" access>
+          <Cell onClick={() => this.show("country")} href="javascript:;" access>
             <CellBody>国籍</CellBody>
             <CellFooter>{country}</CellFooter>
           </Cell>
-          <Cell onClick={() => this.show('province')} href="javascript:;" access>
+          <Cell
+            onClick={() => this.show("province")}
+            href="javascript:;"
+            access
+          >
             <CellBody>省份</CellBody>
             <CellFooter>{province}</CellFooter>
           </Cell>
-          <Cell onClick={() => this.show('city')} href="javascript:;" access>
+          <Cell onClick={() => this.show("city")} href="javascript:;" access>
             <CellBody>城市</CellBody>
             <CellFooter>{city}</CellFooter>
           </Cell>
@@ -152,5 +180,8 @@ class UserDetail extends React.Component {
     );
   }
 }
-UserDetail = connect(mapStateToProps, mapDispatchToProps)(UserDetail);
+UserDetail = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(UserDetail);
 export default withRouter(UserDetail);

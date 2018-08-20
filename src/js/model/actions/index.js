@@ -36,3 +36,11 @@ export const hide_toast = () => {
     type: "HIDE_TOAST"
   };
 };
+
+export const update_user = ({ key, value }) => {
+  return {
+    type: "UPDATE_USER",
+    key,
+    value
+  };
+};
