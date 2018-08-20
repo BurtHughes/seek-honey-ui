@@ -3,7 +3,7 @@ import { store } from "../../index";
 import { toast } from "./toast";
 
 // Restfult风格请求
-let baseUrl = "http://4g5iw4.natappfree.cc/";
+let baseUrl = "http://sssj8f.natappfree.cc/";
 let isPrd = true; //false-测试 true-生产
 
 let request = ({ path, method, param }) => {

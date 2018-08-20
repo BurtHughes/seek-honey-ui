@@ -44,3 +44,9 @@ export const update_user = ({ key, value }) => {
     value
   };
 };
+
+export const product_list = () => {
+  return {
+    type: "PRODUCT_LIST"
+  }
+}

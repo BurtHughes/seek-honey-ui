@@ -9,33 +9,33 @@ import {
     Toast
 } from 'react-weui';
 import { GET } from '../common/request';
-import { TestUrl } from '../test-data/url-list';
 import fm1 from '../../img/fm1.jpg';
 import 'whatwg-fetch';
+import { connect } from 'react-redux';
+
+const mapStateToProps = (state, ownProps) => {
+    let productList = state.product.productList;
+    return { productList };
+}
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+    return {
+        update: (list) => {
+            dispatch(list);
+        }
+    };
+}
 
 // 首页内容
-export default class Home extends React.Component {
-    state = {
-        dataList: [],
-        showLoading: false
-    }
+class Home extends React.Component {
+    componentDidMount(){
+        GET({path:''}).then((res)=>{
 
-    constructor() {
-        super();
-        let success = res => {
-            //console.log('成功:');
-            //console.log(res);
-            this.setState({ dataList: res.data, showLoading: false });
-        };
-        let fail = res => {
-            console.log('失败:' + res);
-            this.setState({ showLoading: false });
-        };
-        //GET({ path: TestUrl.productList }).then(success, fail);
+        });
     }
 
     cellList = () => {
-        return this.state.dataList.map((obj, index) => {
+        return this.props.productList.map((obj, index) => {
             return <Cell key={index} link>
                 <CellHeader>
                     <img src={fm1} alt={obj.imgId} style={{ width: '100px' }} />
@@ -56,3 +56,5 @@ export default class Home extends React.Component {
         );
     }
 }
+Home = connect(mapStateToProps,mapDispatchToProps)(Home)
+export default Home
