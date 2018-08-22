@@ -59,3 +59,12 @@ body{
     text-align: center;
 }
 /* mine end */
+
+/* home start */
+.prd-name{
+    font-size: 1.2rem;
+}
+.prd-list-content{
+    padding-left: 10px;
+}
+/* home end */

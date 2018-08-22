@@ -5,7 +5,8 @@ import {
     CellsTitle,
     CellHeader,
     CellBody,
-    CellFooter
+    CellFooter,
+    Badge
 } from 'react-weui';
 import { GET } from '../common/request';
 import fm1 from '../../img/fm1.jpg';
@@ -41,9 +42,17 @@ class Home extends React.Component {
         return this.props.productList.map((obj, index) => {
             return <Cell key={index} link>
                 <CellHeader>
-                    <img src={fm1} alt={obj.name} style={{ width: '100px' }} />
+                    <img src={obj.imgUrl} alt={obj.name} style={{ width: '100px' }} />
                 </CellHeader>
-                <CellBody>{obj.name}</CellBody>
+                <CellBody className="prd-list-content">
+                    <p className="prd-name">{obj.name}</p>
+                    <p>¥ {obj.price}/瓶</p>
+                    <p>生产日期：{obj.productionDate}</p>
+                    <p>
+                        <Badge preset="body">{obj.packing}</Badge>
+                        <Badge preset="body">{obj.size}</Badge>
+                    </p>
+                </CellBody>
                 <CellFooter />
             </Cell>;
         });
