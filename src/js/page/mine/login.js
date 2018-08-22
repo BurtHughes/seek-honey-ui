@@ -51,8 +51,7 @@ class Login extends React.Component {
     };
     POST({
       path: 'login',
-      param: param,
-      toast: this.props.toast
+      param
     })
       .then(res => {
         if (res.code === 0) {
