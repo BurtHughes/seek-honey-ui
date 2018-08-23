@@ -3,7 +3,7 @@ import { Tab, TabBody, TabBar, TabBarItem, Toast } from "react-weui";
 import HomeBtn from "../../img/home.png";
 import ListBtn from "../../img/list.png";
 import MineBtn from "../../img/mine.png";
-import Home from "./home";
+import Home from "./home/home";
 import News from "./news";
 import Identify from "./identify";
 import Mine from "./mine/mine";

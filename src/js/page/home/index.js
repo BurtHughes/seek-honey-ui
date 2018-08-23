@@ -9,9 +9,9 @@ import {
     Badge
 } from 'react-weui';
 import 'whatwg-fetch';
-import { GET } from '../common/request';
+import { GET } from '../../common/request';
 import { connect } from 'react-redux';
-import { update_product } from '../model/actions';
+import { update_product } from '../../model/actions';
 
 const mapStateToProps = (state, ownProps) => {
     let prd = state.product || [];
@@ -28,7 +28,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 }
 
 // 首页内容
-class Home extends React.Component {
+class Index extends React.Component {
     componentDidMount() {
         GET({ path: 'product' }).then((res) => {
             if (res.code === 0) {
@@ -59,12 +59,12 @@ class Home extends React.Component {
 
     render = () => {
         return (
-            <div style={{ display: this.props.display }}>
+            <div>
                 <CellsTitle>新鲜的蜂蜜</CellsTitle>
                 <Cells>{this.cellList()}</Cells>
             </div>
         );
     }
 }
-Home = connect(mapStateToProps, mapDispatchToProps)(Home)
-export default Home
+Index = connect(mapStateToProps, mapDispatchToProps)(Index)
+export default Index

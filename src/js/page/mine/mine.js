@@ -27,21 +27,21 @@ class Mine extends React.Component {
         <div style={{ display: display }}>
           <Switch>
             <Route
-              path="/"
+              path="/mine"
               exact
               render={() => {
                 return isLogin ? (
-                  <Redirect to="/info" />
+                  <Redirect to="/mine/info" />
                 ) : (
-                  <Redirect to="/nologin" />
+                  <Redirect to="/mine/nologin" />
                 );
               }}
             />
-            <Route path="/info" component={Info} />
-            <Route path="/nologin" component={NoLogin} />
-            <Route path="/login" component={Login} />
-            <Route path="/register" component={Register} />
-            <Route path="/detail" component={UserDetail} />
+            <Route path="/mine/info" component={Info} />
+            <Route path="/mine/nologin" component={NoLogin} />
+            <Route path="/mine/login" component={Login} />
+            <Route path="/mine/register" component={Register} />
+            <Route path="/mine/detail" component={UserDetail} />
           </Switch>
         </div>
       </Router>
