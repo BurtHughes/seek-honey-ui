@@ -15,15 +15,19 @@ import { POST } from "../../common/request"
 import { connect } from 'react-redux'
 import { login } from '../../model/actions'
 import { toast } from '../../common/toast'
+import { jump } from '../../common/jump'
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     setLogin: obj => {
       obj['isLogin'] = true;
       localStorage.setItem("userInfo", JSON.stringify(obj));
       dispatch(login(obj));
     },
-    ...toast(dispatch)
+    ...toast(dispatch),
+    jump: (path) => {
+      jump(ownProps.history, dispatch, 'tab4', path);
+    }
   }
 }
 
@@ -57,14 +61,14 @@ class Login extends React.Component {
         if (res.code === 0) {
           this.props.showToast('success', '登录成功', 1000, ()=>{
             this.props.setLogin(res.data);
-            this.props.history.push("/info");
+            this.props.jump("/mine/info");
           });
         }
       });
   };
 
   back = () => {
-    this.props.history.push("/nologin");
+    this.props.jump("/mine/index");
   }
 
   render = () => {

@@ -1,6 +1,16 @@
 import React from "react";
 import { ButtonArea, Button } from "react-weui";
 import { withRouter, BrowserRouter as Router } from "react-router-dom";
+import { connect } from 'react-redux';
+import { jump } from '../../common/jump';
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    jump: (path) => {
+      jump(ownProps.history, dispatch, 'tab4', path);
+    }
+  }
+}
 
 class NoLogin extends React.Component {
   constructor() {
@@ -10,11 +20,11 @@ class NoLogin extends React.Component {
   }
 
   gotoLogin = () => {
-    this.props.history.push("/login");
+    this.props.jump("/mine/login");
   };
 
   gotoRegister = () => {
-    this.props.history.push("/register");
+    this.props.jump("/mine/register");
   };
 
   render = () => {
@@ -28,5 +38,5 @@ class NoLogin extends React.Component {
     );
   };
 }
-
+NoLogin = connect(null, mapDispatchToProps)(NoLogin)
 export default withRouter(NoLogin)

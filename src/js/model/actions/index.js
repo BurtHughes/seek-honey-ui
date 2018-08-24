@@ -51,3 +51,18 @@ export const update_product = (productList) => {
     productList
   }
 }
+
+export const switch_tab = (tab) => {
+  return {
+    type: 'SWITCH_TAB',
+    tab
+  }
+}
+
+export const save_path = ({ tab, path }) => {
+  return {
+    type: 'SAVE_PATH',
+    tab,
+    path
+  }
+}

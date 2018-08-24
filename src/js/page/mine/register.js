@@ -14,6 +14,16 @@ import {
 } from "react-weui";
 import { POST } from "../../common/request";
 import { withRouter } from "react-router-dom";
+import { connect } from 'react-redux';
+import { jump } from '../../common/jump';
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    jump: (path) => {
+      jump(ownProps.history, dispatch, 'tab4', path);
+    }
+  }
+}
 
 class Register extends React.Component {
   constructor() {
@@ -87,11 +97,11 @@ class Register extends React.Component {
 
   gotoLogin = () => {
     this.setState({ dialogShow: false });
-    this.props.history.push("/login");
+    this.props.jump("/mine/login");
   };
 
   gotoNologin = () => {
-    this.props.history.push("/nologin");
+    this.props.jump("/mine/index");
   };
 
   render = () => {
@@ -139,5 +149,5 @@ class Register extends React.Component {
     );
   };
 }
-
+Register = connect(null, mapDispatchToProps)(Register);
 export default withRouter(Register);

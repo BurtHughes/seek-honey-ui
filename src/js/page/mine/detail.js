@@ -14,6 +14,7 @@ import { connect } from "react-redux";
 import { toast } from "../../common/toast";
 import { PUT } from "../../common/request";
 import { update_user } from "../../model/actions";
+import { jump } from '../../common/jump';
 
 const appMsgIcon = (
   <img
@@ -35,6 +36,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     ...toast(dispatch),
     updateUser: info => {
       dispatch(update_user(info));
+    },
+    jump: (path) => {
+      jump(ownProps.history, dispatch, 'tab4', path);
     }
   };
 };
@@ -46,11 +50,11 @@ class UserDetail extends React.Component {
     menus: [
       {
         label: "选项1",
-        onClick: () => {}
+        onClick: () => { }
       },
       {
         label: "选项2",
-        onClick: () => {}
+        onClick: () => { }
       }
     ],
     actions: [
@@ -113,7 +117,7 @@ class UserDetail extends React.Component {
   hide = () => {
     this.setState({ isShow: false });
   };
-  back = () => this.props.history.push("/info");
+  back = () => this.props.jump("/mine/info");
   render() {
     let { name, sex, country, province, city } = this.props.info;
     let map = {
