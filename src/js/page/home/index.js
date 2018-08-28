@@ -6,12 +6,14 @@ import {
     CellHeader,
     CellBody,
     CellFooter,
-    Badge
+    Badge,
+    Button
 } from 'react-weui';
 import 'whatwg-fetch';
 import { GET } from '../../common/request';
 import { connect } from 'react-redux';
 import { update_product } from '../../model/actions';
+import { jump } from '../../common/jump';
 
 const mapStateToProps = (state, ownProps) => {
     let prd = state.product || [];
@@ -23,6 +25,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         update: (list) => {
             dispatch(update_product(list));
+        },
+        jump: () => {
+            jump(ownProps.history, dispatch, 'tab1', '/home/buy');
         }
     };
 }
@@ -62,6 +67,7 @@ class Index extends React.Component {
             <div>
                 <CellsTitle>新鲜的蜂蜜</CellsTitle>
                 <Cells>{this.cellList()}</Cells>
+                <Button onClick={e=>this.props.jump()}>购买</Button>
             </div>
         );
     }
