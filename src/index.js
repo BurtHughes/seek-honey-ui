@@ -2,7 +2,7 @@ import React from "react"
 import ReactDOM from "react-dom"
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
-import { BrowserRouter } from 'react-router-dom'
+import { BrowserRouter as Router, withRouter, Route, Switch, } from 'react-router-dom'
 import Banner from "./js/assets/banner"
 import Content from "./js/page/content"
 import rootReducer from "./js/model/reducers"
@@ -14,15 +14,17 @@ export let store = createStore(rootReducer);
 class App extends React.Component {
   render() {
     return (
-      <BrowserRouter>
+      <Router>
         <div>
           <Banner />
           <Content />
         </div>
-      </BrowserRouter>
+      </Router>
     );
   }
 }
+
+//App = withRouter(App)
 
 ReactDOM.render(
   <Provider store={store}>

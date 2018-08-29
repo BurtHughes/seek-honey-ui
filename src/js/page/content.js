@@ -28,15 +28,14 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 };
 
 const getPathByTab = (tab) => {
+  let indexPath = {
+    tab1: '/home/index',
+    tab2: '/news/index',
+    tab3: '/identify/index',
+    tab4: '/mine/index'
+  };
   let currentPath = JSON.parse(localStorage.getItem("currentPath"));
-  if (!currentPath) {
-    currentPath = {
-      tab1: '/home/index',
-      tab2: '/news/index',
-      tab3: '/identify/index',
-      tab4: '/mine/index'
-    };
-  }
+  currentPath = Object.assign({}, indexPath, currentPath);
   return currentPath['tab' + tab];
 }
 
