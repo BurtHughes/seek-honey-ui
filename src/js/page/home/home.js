@@ -13,12 +13,13 @@ import Buy from './buy';
 const mapStateToProps = (state, owmProps) => {
     let isLogin =
         state.auth.isLogin || JSON.parse(localStorage.getItem("userInfo"));
-    return { isLogin };
+    let isShow = (state.tab.currentTab === 1) ? null : 'none';
+    return { isLogin, isShow };
 };
 
 class Home extends React.Component {
     render = () => {
-        let { display, isLogin } = this.props;
+        let { isShow, isLogin } = this.props;
         let redirect = () => {
             return (
                 <Redirect to="/home/index" />
@@ -26,7 +27,7 @@ class Home extends React.Component {
         };
         return (
             <Router>
-                <div style={{ display: display }}>
+                <div style={{ display: isShow }}>
                     <Switch>
                         <Route path="/home" exact render={redirect} />
                         <Route path="/home/index" component={Index} />

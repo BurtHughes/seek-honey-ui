@@ -1,10 +1,19 @@
 import React from "react";
 import {Article} from 'react-weui';
+import { connect } from 'react-redux';
 
-export default class News extends React.Component {
+const mapStateToProps = (state, owmProps) => {
+  let isLogin =
+    state.auth.isLogin || JSON.parse(localStorage.getItem("userInfo"));
+  let isShow = (state.tab.currentTab === 2) ? null : 'none';
+  return { isLogin, isShow };
+};  
+
+class News extends React.Component {
   render = () => {
+    let { isShow, isLogin } = this.props;
     return (
-      <div style={{ display: this.props.display }}>
+      <div style={{ display: isShow }}>
         <Article>
           <h1>资讯页面</h1>
           <section>
@@ -21,3 +30,4 @@ export default class News extends React.Component {
     );
   };
 }
+export default connect(mapStateToProps)(News)

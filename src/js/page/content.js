@@ -8,7 +8,7 @@ import Mine from "./mine/mine";
 import Identify from "./identify";
 import { connect } from "react-redux";
 import { switch_tab } from '../model/actions';
-import { withRouter } from "react-router-dom";
+import { withRouter, Switch, Route } from "react-router-dom";
 import { Tab, TabBody, TabBar, TabBarItem, Toast } from "react-weui";
 
 const mapStateToProps = (state, ownProps) => {
@@ -40,21 +40,11 @@ const getPathByTab = (tab) => {
 }
 
 class Content extends React.Component {
-  constructor() {
-    super();
-    this.pageProp = this.pageProp.bind(this);
-  }
 
   componentWillMount() {
     let tab = JSON.parse(localStorage.getItem("currentTab")) || 1;
     this.props.switchTab(tab);
   }
-
-  pageProp = index => {
-    return {
-      display: (this.props.currentTab === index) ? null : "none"
-    };
-  };
 
   render() {
     let { toastShow, toastIcon, toastText, currentTab, switchTab } = this.props;
@@ -62,10 +52,12 @@ class Content extends React.Component {
       <Tab>
         <Toast show={toastShow} icon={toastIcon}>{toastText}</Toast>
         <TabBody>
-          <Home {...this.pageProp(1)} />
-          <News {...this.pageProp(2)} />
-          <Identify {...this.pageProp(3)} />
-          <Mine {...this.pageProp(4)} />
+          <Switch>
+            <Route path="/home" component={Home}/>
+            <Route path="/news" component={News}/>
+            <Route path="/identify" component={Identify}/>
+            <Route path="/mine" component={Mine}/>
+          </Switch>
         </TabBody>
         <TabBar>
           <TabBarItem
